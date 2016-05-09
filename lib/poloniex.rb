@@ -40,6 +40,18 @@ module Poloniex
     get 'returnTradeHistory', currencyPair: currency_pair
   end
 
+  def self.chart_data(currency_pair, period, start_time, end_time)
+    get 'returnChartData', currencyPair: currency_pair, period: period, start: start_time, end: end_time
+  end
+
+  def self.currencies
+    get 'returnCurrencies',
+  end
+
+  def self.loan_orders(currency)
+    get 'returnLoanOrders', currency: currency
+  end
+
   def self.balances
     post 'returnBalances'
   end

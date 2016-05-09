@@ -5,7 +5,7 @@ require 'poloniex/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "poloniex"
-  spec.version       = "1.0.1"
+  spec.version       = Poloniex::VERSION
   spec.authors       = ["Carl Schwope"]
   spec.email         = ["schwope.carl@gmail.com"]
   spec.description   = %q{Provides a wrapper for poloniex.com api}

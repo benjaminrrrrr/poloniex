@@ -136,8 +136,8 @@ module Poloniex
     post 'closeMarginPosition', currencyPair: currency_pair
   end
 
-  def self.create_loan_offer(currency_pair, amount, duration, auto_renew, lending_rate)
-    post 'createLoanOffer'
+  def self.create_loan_offer(currency, amount, duration, auto_renew, lending_rate)
+    post 'createLoanOffer', currency: currency, amount: amount, duration: duration, autoRenew: auto_renew, lendingRate: lending_rate
   end
 
   def self.cancel_loan_offer(order_number)

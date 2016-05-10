@@ -152,6 +152,10 @@ module Poloniex
     post 'returnActiveLoans'
   end
 
+  def self.lending_history( currency_pair, start_date, end_date )
+    post 'returnLendingHistory', currencyPair: currency_pair, start: start_date, end: end_date
+  end
+
   def self.toggle_auto_renew
     post 'toggleAutoRenew'
   end

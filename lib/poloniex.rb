@@ -1,5 +1,5 @@
-require "poloniex/version"
-
+require 'poloniex/version'
+require 'date'
 require 'rest-client'
 require 'openssl'
 require 'addressable/uri'
@@ -173,7 +173,7 @@ module Poloniex
 
   def self.post( command, params = {} )
     params[:command] = command
-    params[:nonce]   = Time.now.to_i * 1000
+    params[:nonce]   = DateTime.now.strftime('%Q').to_i
     resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
   end
 

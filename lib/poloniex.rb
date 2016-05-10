@@ -141,7 +141,7 @@ module Poloniex
   end
 
   def self.cancel_loan_offer(order_number)
-    post 'cancelLoanOffer'
+    post 'cancelLoanOffer', orderNumber: order_number
   end
 
   def self.return_open_loan_offers

@@ -168,13 +168,15 @@ module Poloniex
 
   def self.get( command, params = {} )
     params[:command] = command
-    resource[ 'public' ].get params: params
+    response = resource[ 'public' ].get params: params
+    return JSON.parse(response)
   end
 
   def self.post( command, params = {} )
     params[:command] = command
     params[:nonce]   = DateTime.now.strftime('%Q').to_i
-    resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
+    response = resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
+    return JSON.parse(response)
   end
 
   def self.create_sign( data )

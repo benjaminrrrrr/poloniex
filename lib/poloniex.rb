@@ -144,11 +144,11 @@ module Poloniex
     post 'cancelLoanOffer', orderNumber: order_number
   end
 
-  def self.return_open_loan_offers
+  def self.open_loan_offers
     post 'returnOpenLoanOffers'
   end
 
-  def self.return_active_loans
+  def self.active_loans
     post 'returnActiveLoans'
   end
 

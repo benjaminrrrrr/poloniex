@@ -1,4 +1,3 @@
-require 'poloniex/version'
 require 'date'
 require 'rest-client'
 require 'openssl'
@@ -8,6 +7,17 @@ module Poloniex
 
   class << self
     attr_accessor :configuration
+  end
+
+  class Response
+    attr_reader :json, :raw, :errors
+
+    def initialize(response)
+      @raw = response
+      @json = JSON.parse(response)
+      @errors = self.json['error'] ? true : false
+    end
+
   end
 
   def self.setup
@@ -168,13 +178,15 @@ module Poloniex
 
   def self.get( command, params = {} )
     params[:command] = command
-    resource[ 'public' ].get params: params
+    res = resource[ 'public' ].get params: params
+    return self::Response.new(res)
   end
 
   def self.post( command, params = {} )
     params[:command] = command
     params[:nonce]   = DateTime.now.strftime('%Q').to_i
-    response = resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
+    res = resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
+    return self::Response.new(res)
   end
 
   def self.create_sign( data )

@@ -1,4 +1,4 @@
-require 'poloniex/version'
+require_relative 'poloniex/version'
 require 'date'
 require 'rest-client'
 require 'openssl'
@@ -163,20 +163,19 @@ module Poloniex
   protected
 
   def self.resource
-    @@resouce ||= RestClient::Resource.new( 'https://www.poloniex.com' )
+    @@resouce ||= RestClient::Resource.new( 'https://www.poloniex.com', :open_timeout => 10 )
   end
 
   def self.get( command, params = {} )
     params[:command] = command
     retries = 0
     begin
-      puts 'making request'
       resource[ 'public' ].get params: params
     rescue => e
-      puts 'rescuing, sleep 3'
-      sleep 3
+      puts "Poloniex not reachable after 10s, retrying"
+      sleep 10
       retries += 1
-      retry if retries <= 10
+      retry if retries <= 20
     end
   end
 
@@ -185,13 +184,12 @@ module Poloniex
     params[:nonce]   = DateTime.now.strftime('%Q').to_i
     retries = 0
     begin
-      puts 'making request'
       resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
     rescue => e
-      puts "rescuing, sleep 3"
-      sleep 3
+      puts "Poloniex not reachable after 10s, retrying"
+      sleep 10
       retries += 1
-      retry if retries <= 10
+      retry if retries <= 20
     end
   end
 

@@ -4,7 +4,7 @@ require_relative '../lib/poloniex'
 
 class TestPoloniex < Minitest::Test
   def setup
-    c = YAML.load_file('test/config.yml')
+    c = YAML.load_file('config.yml')
     Poloniex.setup do | config |
       config.key = c['key']
       config.secret = c['secret']

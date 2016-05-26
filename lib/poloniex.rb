@@ -168,13 +168,31 @@ module Poloniex
 
   def self.get( command, params = {} )
     params[:command] = command
-    resource[ 'public' ].get params: params
+    retries = 0
+    begin
+      puts 'making request'
+      resource[ 'public' ].get params: params
+    rescue RestClient::Exception
+      puts 'rescuing, sleep 3'
+      sleep 3
+      retries += 1
+      retry if retries <= 10
+    end
   end
 
   def self.post( command, params = {} )
     params[:command] = command
     params[:nonce]   = DateTime.now.strftime('%Q').to_i
-    response = resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
+    retries = 0
+    begin
+      puts 'making request'
+      resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
+    rescue RestClient::Exception
+      puts "rescuing, sleep 3"
+      sleep 3
+      retries += 1
+      retry if retries <= 10
+    end
   end
 
   def self.create_sign( data )

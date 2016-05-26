@@ -172,7 +172,7 @@ module Poloniex
     begin
       puts 'making request'
       resource[ 'public' ].get params: params
-    rescue RestClient::Exception
+    rescue => e
       puts 'rescuing, sleep 3'
       sleep 3
       retries += 1
@@ -187,7 +187,7 @@ module Poloniex
     begin
       puts 'making request'
       resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
-    rescue RestClient::Exception
+    rescue => e
       puts "rescuing, sleep 3"
       sleep 3
       retries += 1

@@ -182,7 +182,6 @@ module Poloniex
   def self.post( command, params = {} )
     params[:command] = command
     params[:nonce]   = (Time.now.to_f * 1000000).round(0).to_s
-    puts params[:nonce]
     retries = 0
     begin
       resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }

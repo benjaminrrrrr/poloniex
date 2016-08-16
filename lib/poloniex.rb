@@ -48,8 +48,8 @@ module Poloniex
     get 'returnCurrencies'
   end
 
-  def self.loan_orders(currency)
-    get 'returnLoanOrders', currency: currency
+  def self.loan_orders(currency, limit)
+    get 'returnLoanOrders', currency: currency, limit: limit
   end
 
   def self.balances

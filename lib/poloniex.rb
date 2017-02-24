@@ -187,9 +187,10 @@ module Poloniex
       resource[ 'tradingApi' ].post params, { Key: configuration.key , Sign: create_sign( params ) }
     rescue => e
       puts "Poloniex exception, retrying"
-      sleep 10
+      puts params
+      sleep 5
       retries += 1
-      retry if retries <= 20
+      retry if retries <= 1
     end
   end
 

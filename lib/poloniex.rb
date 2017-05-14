@@ -188,7 +188,6 @@ module Poloniex
     rescue => e
       puts "Poloniex exception, retrying"
       puts params
-      sleep 5
       retries += 1
       retry if retries <= 1
     end
